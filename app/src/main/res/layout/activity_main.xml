@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/filter"
+            android:entries="@array/filters"
+            android:layout_alignBottom="@+id/go_button"
+            android:layout_toLeftOf="@+id/go_button">
+
+            </Spinner>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_button"
+            android:text="@string/go_button_label"
+            android:layout_alignParentRight="true">
+
+            </Button>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/title_list"
+        android:choiceMode="multipleChoice"
+        android:smoothScrollbar="false"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true">
+
+        </ListView>
+
+
+
+
+</LinearLayout>

@@ -1,10 +1,12 @@
 package com.google.android.gms.redditviewr.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +27,7 @@ import Tasks.RedditDetailsTask;
 /**
  * Created by Administrator on 7/8/2014.
  */
-public class DetailsView extends Activity {
+public class DetailsView extends ActionBarActivity {
 
 
     private ArrayList<DetailsData> data;
@@ -51,7 +53,9 @@ public class DetailsView extends Activity {
         this.getImg = new LargeIconTask(this);
 
 
+        ActionBar actionBar = getActionBar();
 
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
              RedditDetailsTask detailsTask = new RedditDetailsTask(DetailsView.this);
             Intent in = getIntent();
@@ -121,11 +125,17 @@ public class DetailsView extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+                default:
+                return super.onOptionsItemSelected(item);
+            case R.id.action_refresh:
+                return true;
+
         }
-        return super.onOptionsItemSelected(item);
     }
 
 }

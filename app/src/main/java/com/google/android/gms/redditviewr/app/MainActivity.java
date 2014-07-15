@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -31,7 +32,6 @@ public class MainActivity extends Activity {
     private LayoutInflater layoutInflater;
     private Button goButton;
     private Spinner filters;
-    private InputMethodManager inMangr;
     private RedditIconTask getImg;
     private RedditApiTask apiTask;
     private ProgressDialog progDialog;
@@ -44,7 +44,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //Setting views in layout
-        this.inMangr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         this.postList = (ListView) findViewById(R.id.title_list);
         this.getImg = new RedditIconTask(this);
         this.layoutInflater = LayoutInflater.from(this);
@@ -61,7 +60,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                inMangr.hideSoftInputFromInputMethod(goButton.getWindowToken(), 0);
                 apiTask = new RedditApiTask(MainActivity.this);
                 try {
                     TextView textView = (TextView) filters.getSelectedView();
@@ -146,7 +144,37 @@ public class MainActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
 
     }
-// stops asynchronous background tasks from slowing down the second view
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.action_refresh:
+                apiTask = new RedditApiTask(MainActivity.this);
+                try {
+                    TextView textView = (TextView) filters.getSelectedView();
+                    String filter = textView.getText().toString();
+                    apiTask.execute(filter);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    apiTask.cancel(true);
+                    alert(getResources().getString(R.string.looking_for_topics));
+                }
+
+                break;
+            // action with ID action_settings was selected
+            case R.id.action_settings:
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    // stops asynchronous background tasks from slowing down the second view
     @Override
     protected void onPause() {
         super.onPause();
@@ -154,6 +182,7 @@ public class MainActivity extends Activity {
         getImg.stopImage(true);
 
     }
+
 
 
 }

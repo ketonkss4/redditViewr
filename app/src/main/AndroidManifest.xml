@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.android.gms.redditviewr.app" >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity
-            android:name="com.google.android.gms.redditviewr.app.MainActivity"
-            android:label="@string/app_name">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.MainActivity" />
-         <intent-filter>
-            <action android:name="org.churchapp.community.MainActivity" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-         </intent-filter>
-        </activity>
-        <activity
-            android:name=".DetailsView"
-            android:label="@string/app_name"
-            />
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name=".SplashScreen"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Host"
+            android:label="@string/title_activity_host" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.MainActivity" />
 
+            <intent-filter>
+                <action android:name="org.churchapp.community.MainActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

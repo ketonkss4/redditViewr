@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.android.gms.redditviewr.app.DetailsView;
+import com.google.android.gms.redditviewr.app.Host;
+import com.google.android.gms.redditviewr.app.MainFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,8 +23,10 @@ import ListData.DetailsData;
 public class RedditDetailsTask extends AsyncTask<String, Integer, String> {
     private ProgressDialog progDialog;
     private Context context;
-    private DetailsView activity;
+    private DetailsView detailsView;
+    private MainFragment mFrag;
     private static final String DEBUG_TAG = "RedditDetailsTask";
+    private Host host;
 
 
     /**
@@ -31,17 +35,20 @@ public class RedditDetailsTask extends AsyncTask<String, Integer, String> {
      */
 
 
-    public RedditDetailsTask(DetailsView activity) {
+    public RedditDetailsTask(MainFragment mainFragment, DetailsView detailsView) {
         super();
-        this.activity = activity;
-        this.context = this.activity.getApplicationContext();
+        this.mFrag = mainFragment;
+        this.detailsView = detailsView;
+        this.context = this.detailsView.getActivity();
+        this.host = new Host();
 
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progDialog = ProgressDialog.show(this.activity, "Search", "getting comments" , true, false);
+        progDialog = ProgressDialog.show(this.context, "Search", "getting comments" , true);
+
         progDialog.setCancelable(true);
 
     }
@@ -66,7 +73,7 @@ public class RedditDetailsTask extends AsyncTask<String, Integer, String> {
 
         progDialog.dismiss();
         if (result.length() == 0) {
-            this.activity.alert ("Unable to find reddit data. Try again later.");
+            this.detailsView.alert("Unable to find reddit data. Try again later.");
             return;
         }
 
@@ -98,7 +105,7 @@ public class RedditDetailsTask extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
         }
             //sets data in details view
-              this.activity.setTopics(detaildata);
+              this.detailsView.setTopics(detaildata);
 
     }
 }

@@ -1,16 +1,17 @@
 package com.google.android.gms.redditviewr.app;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,67 +28,62 @@ import Tasks.RedditDetailsTask;
 /**
  * Created by Administrator on 7/8/2014.
  */
-public class DetailsView extends ActionBarActivity {
+public class DetailsView extends Fragment {
 
 
     private ArrayList<DetailsData> data;
     private ListView commentList;
     private LayoutInflater layoutInflater;
-    private InputMethodManager inMangr;
     private LargeIconTask getImg;
     private RedditIconTask stopImg;
     private ImageView imageView;
-    private Drawable draw;
     final private String DEBUG_TAG = "Details View";
+    private Bundle args;
+
+
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details_view);
-        this.inMangr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.commentList = (ListView) findViewById(R.id.commentList);
-        this.layoutInflater = LayoutInflater.from(this);
-        this.imageView =(ImageView)findViewById(R.id.imageLarge);
-        this.getImg = new LargeIconTask(this);
 
+         args = getArguments();
 
-        ActionBar actionBar = getActionBar();
+        RedditDetailsTask detailsTask = new RedditDetailsTask(null,DetailsView.this);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (args != null){
+            String img = args.getString("img");
+            String comments = args.getString("comments");
 
-             RedditDetailsTask detailsTask = new RedditDetailsTask(DetailsView.this);
-            Intent in = getIntent();
-            Bundle bun = in.getExtras();
-
-
-        if(bun!=null) {
-            String j = (String) bun.get("link");
-            final String url = (String)bun.get("img");
-            detailsTask.execute(j);
-            setDrawable(url);
-
-
-
-
-
-        }else{
-            Toast.makeText(getApplicationContext(),"comments link was null", Toast.LENGTH_LONG).show();
-
+            detailsTask.execute(comments);
+            setDrawable(img);
         }
 
 
+        View v = inflater.inflate(R.layout.details_view, container,
+                false);
+
+        this.commentList = (ListView) v.findViewById(R.id.commentList);
+        this.imageView =(ImageView) v.findViewById(R.id.imageLarge);
+        this.getImg = new LargeIconTask(this);
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
     }
+
+
 
     public static class DetailsViewHolder {
         public TextView comment, authorName, redditScore, postTime;
 
         public DetailsData data;
-    }
-    public void alert (String msg){
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     public void setTopics(ArrayList<DetailsData> data) {
@@ -99,8 +95,18 @@ public class DetailsView extends ActionBarActivity {
 
 
     public void setDrawable(String url){
-        getImg.execImage(url);
+
+        if(url != null) {
+            Log.v("DETAILS_VIEW:", url);
+            LargeIconTask largeIconTask = new LargeIconTask(this);
+            largeIconTask.execImage(url);
+
+        }else{
+           imageView.setImageResource(R.drawable.filler_icon);
+
+       }
     }
+
     public void setImage (Drawable draw){
         if (draw != null) {
             imageView.setImageDrawable(draw);
@@ -111,13 +117,8 @@ public class DetailsView extends ActionBarActivity {
         }
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void alert(String msg) {
+        Toast.makeText(this.getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -128,7 +129,7 @@ public class DetailsView extends ActionBarActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+
                 return true;
                 default:
                 return super.onOptionsItemSelected(item);
@@ -136,6 +137,17 @@ public class DetailsView extends ActionBarActivity {
                 return true;
 
         }
+    }
+
+    @Override
+    public void onDetach() {
+        allowBackPressed();
+        super.onDetach();
+
+    }
+
+    public boolean allowBackPressed ( ){
+        return true;
     }
 
 }

@@ -7,9 +7,6 @@ import android.util.Log;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.google.android.gms.redditviewr.app.MainActivity;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -48,7 +45,7 @@ public class RedditIconTask {
             return DEFAULT_ICON;
         }
     }
-    //receives cancel async task request from MainActivity on Pause
+    //receives cancel async task request from MainFragment on Pause
     public void stopImage (Boolean stop){
             cancelled=stop;
         Log.v(debugTag,"Stop AsyncTask");

@@ -5,10 +5,15 @@
     <string name="go_button_label">Go!</string>
     <string name="looking_for_topics">searching...</string>
     <string name="action_settings">Menu</string>
+
     <string-array name="filters">
         <item>hot</item>
         <item>new</item>
         <item>rising</item>
         <item>controversial</item>
     </string-array>
+
+    <string name="title_activity_host">Host</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

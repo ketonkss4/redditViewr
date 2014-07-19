@@ -1,5 +1,7 @@
 package Adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.redditviewr.app.MainActivity;
+import com.google.android.gms.redditviewr.app.MainFragment;
 import com.google.android.gms.redditviewr.app.R;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,18 +27,20 @@ import ImageLoader.RedditIconTask;
  */
 public class RedditDataAdapter extends BaseAdapter  {
     private static final String DEBUG_TAG = "LOGTAG!!!";
-    private MainActivity activity;
+    private MainFragment fragment;
     private RedditIconTask imgGet;
     private LayoutInflater layoutInflater;
     private ArrayList<ListData> topics;
+    private Context mContext;
 
 
-    public RedditDataAdapter(MainActivity a, RedditIconTask i, LayoutInflater l, ArrayList<ListData
+    public RedditDataAdapter(MainFragment a, RedditIconTask i, LayoutInflater l, ArrayList<ListData
             > data ) {
-        this.activity = a;
+        this.fragment = a;
         this.imgGet = i;
         this.layoutInflater = l;
         this.topics = data;
+        this.mContext = a.getActivity();
     }
 
 
@@ -64,12 +66,13 @@ public class RedditDataAdapter extends BaseAdapter  {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MainActivity.MyViewHolder holder;
+        MainFragment.MyViewHolder holder;
         if (convertView == null){
             // sets view layout resources
 
-            convertView = layoutInflater.inflate(R.layout.row, parent,false);
-            holder = new MainActivity.MyViewHolder();
+            LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
+            convertView = inflater.inflate(R.layout.row, parent,false);
+            holder = new MainFragment.MyViewHolder();
             holder.listName = (TextView)convertView.findViewById(R.id.title);
             holder.authorName = (TextView)convertView.findViewById(R.id.author);
             holder.thumbnail = (ImageView)convertView.findViewById(R.id.thumbnail);
@@ -79,10 +82,10 @@ public class RedditDataAdapter extends BaseAdapter  {
 
             //Allows view to be recycled
             convertView.setTag(holder);
-
+            Log.v(DEBUG_TAG, "Data Set in Reddit Adapter");
 
         }else {
-            holder = (MainActivity.MyViewHolder) convertView.getTag();
+            holder = (MainFragment.MyViewHolder) convertView.getTag();
         }
 
         ListData data = topics.get(position);

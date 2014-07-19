@@ -59,7 +59,7 @@ public class RedditCommentHelper {
 
 
 
-        String url = REDDIT_URL +permalink+"/.json?sort=new&count=25";
+        String url = REDDIT_URL +permalink+".json?sort=new&count=25";
 
         Log.v(LOGTAG, "Fetching " + url);
 

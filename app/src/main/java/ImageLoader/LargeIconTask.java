@@ -26,8 +26,9 @@ public class LargeIconTask {
     }
 //executes download of large image passing in the url from the details view
     public Drawable execImage (String url){
-
         new ImageTask().execute(url);
+        Log.v(debugTag, "We atleast got here " );
+
         return LARGE_IMG;
     }
 

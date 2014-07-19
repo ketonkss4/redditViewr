@@ -1,5 +1,7 @@
 package Adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +23,19 @@ import ListData.DetailsData;
 */
 public class RedditCommentAdapter extends BaseAdapter  {
     private static final String DEBUG_TAG = "LOGTAG!!!";
-    private DetailsView activity;
+    private DetailsView dfragment;
     private LayoutInflater layoutInflater;
     private ArrayList<DetailsData> topics;
+    private Context mContext;
+
 
 
     public RedditCommentAdapter(DetailsView a,  LayoutInflater l, ArrayList<DetailsData
             > data ) {
-        this.activity = a;
+        this.dfragment = a;
         this.layoutInflater = l;
         this.topics = data;
+        this.mContext = a.getActivity();
 
     }
 
@@ -60,7 +65,9 @@ public class RedditCommentAdapter extends BaseAdapter  {
         DetailsView.DetailsViewHolder holder;
         if (convertView == null){
     // sets view layout resources
-            convertView = layoutInflater.inflate(R.layout.row, parent,false);
+            LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
+
+            convertView = inflater.inflate(R.layout.row, parent,false);
             holder = new DetailsView.DetailsViewHolder();
             holder.comment = (TextView)convertView.findViewById(R.id.title);
             holder.authorName = (TextView)convertView.findViewById(R.id.author);

@@ -1,15 +1,17 @@
 package com.google.android.gms.redditviewr.app;
 
+
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,12 +22,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import Adapters.RedditDataAdapter;
 import ListData.ListData;
+import Listeners.OnSelectionListener;
 import Tasks.RedditApiTask;
 import ImageLoader.RedditIconTask;
 
 
 
-public class MainActivity extends Activity {
+public class MainFragment extends android.support.v4.app.Fragment {
 
     private ArrayList<ListData> data;
     private ListView postList;
@@ -35,23 +38,27 @@ public class MainActivity extends Activity {
     private RedditIconTask getImg;
     private RedditApiTask apiTask;
     private ProgressDialog progDialog;
-    private String DEBUG_TAG = "MainActivity";
+    private String DEBUG_TAG = "MainFragment";
 
+
+    private Host host;
+    private OnSelectionListener selectionListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         //Setting views in layout
-        this.postList = (ListView) findViewById(R.id.title_list);
-        this.getImg = new RedditIconTask(this);
-        this.layoutInflater = LayoutInflater.from(this);
-        this.filters = (Spinner) this.findViewById(R.id.filter);
-        this.goButton = (Button) this.findViewById(R.id.go_button);
+        View v = inflater.inflate(R.layout.activity_main, container,
+                false);
+        this.postList = (ListView) v.findViewById(R.id.title_list);
+        this.getImg = new RedditIconTask(host);
+        this.filters = (Spinner) v.findViewById(R.id.filter);
+        this.goButton = (Button) v.findViewById(R.id.go_button);
+        this.host = new Host();
 
         //Creates load more button
-        Button loadMore = new Button(this);
+        Button loadMore = new Button(getActivity());
         loadMore.setText("Load More");
         postList.addFooterView(loadMore);
 
@@ -60,7 +67,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                apiTask = new RedditApiTask(MainActivity.this);
+                apiTask = new RedditApiTask(MainFragment.this);
                 try {
                     TextView textView = (TextView) filters.getSelectedView();
                     String filter = textView.getText().toString();
@@ -69,6 +76,7 @@ public class MainActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     apiTask.cancel(true);
+
                     alert(getResources().getString(R.string.looking_for_topics));
                 }
             }
@@ -83,10 +91,21 @@ public class MainActivity extends Activity {
                 ListData link = data.get(position);
                 String permalink = link.getComments();
                 String largeImg = link.getImageUrl();
-                Intent intent = new Intent(MainActivity.this, DetailsView.class);
-                intent.putExtra("img", largeImg);
-                intent.putExtra("link", permalink);
-                startActivity(intent);
+
+
+
+                Fragment newFragment = new DetailsView();
+                // consider using Java coding conventions (upper first char class names!!!)
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                selectionListener.OnSelectionListener(largeImg, permalink);
 
 
             }
@@ -102,22 +121,34 @@ public class MainActivity extends Activity {
         });
 
 
-//            restore fetched data on orientation change.
-        @SuppressWarnings("deprecation")
-        final Object[] data = (Object[]) getLastNonConfigurationInstance();
-        if (data != null) {
-            this.data = (ArrayList<ListData>) data[0];
-            this.getImg = (RedditIconTask) data[1];
-            postList.setAdapter(new RedditDataAdapter(this, this.getImg, this.layoutInflater, this.data));
 
-        }
+
+
+        return v;
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
     }
 
     public void alert(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), msg, Toast.LENGTH_LONG).show();
     }
-//view holder sets view resource data from API task
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            selectionListener = (OnSelectionListener)getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onSelectionListener");
+        }
+    }
+
+    //view holder sets view resource data from API task
     public static class MyViewHolder {
         public TextView listName, authorName, redditScore, postTime;
         public Button goButton;
@@ -130,26 +161,16 @@ public class MainActivity extends Activity {
         this.postList.setAdapter(new RedditDataAdapter(this, this.getImg, this.layoutInflater, this.data));
 
     }
-//attempts to restart Image download when activity is resumed
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getImg.stopImage(false);
 
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
 
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_refresh:
-                apiTask = new RedditApiTask(MainActivity.this);
+                apiTask = new RedditApiTask(MainFragment.this);
                 try {
                     TextView textView = (TextView) filters.getSelectedView();
                     String filter = textView.getText().toString();
@@ -164,7 +185,7 @@ public class MainActivity extends Activity {
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+                Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT)
                         .show();
                 break;
             default:
@@ -174,15 +195,10 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    // stops asynchronous background tasks from slowing down the second view
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        apiTask.cancel(true);
         getImg.stopImage(true);
-
+        apiTask.cancel(true);
     }
-
-
-
 }

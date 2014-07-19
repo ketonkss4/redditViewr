@@ -5,7 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.redditviewr.app.MainActivity;
+import com.google.android.gms.redditviewr.app.Host;
+import com.google.android.gms.redditviewr.app.MainFragment;
 import com.google.android.gms.redditviewr.app.R;
 
 import org.json.JSONArray;
@@ -24,7 +25,7 @@ public class RedditApiTask extends AsyncTask<String, Integer, String>
 {
     private ProgressDialog progDialog;
     private Context context;
-    private MainActivity activity;
+    private MainFragment fragment;
     private static final String DEBUG_TAG = "RedditAPITask";
 
     /**
@@ -33,16 +34,16 @@ public class RedditApiTask extends AsyncTask<String, Integer, String>
      */
 
 
-    public RedditApiTask(MainActivity activity) {
+    public RedditApiTask(MainFragment fragment) {
         super();
-        this.activity = activity;
-        this.context = this.activity.getApplicationContext();
+        this.fragment = fragment;
+        this.context = this.fragment.getActivity();
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progDialog = ProgressDialog.show(this.activity, "Search", this.context.getResources().getString(R.string.looking_for_topics) , true, false);
+        progDialog = ProgressDialog.show(this.context, "Search", this.context.getResources().getString(R.string.looking_for_topics) , true);
 
 
     }
@@ -68,7 +69,7 @@ public class RedditApiTask extends AsyncTask<String, Integer, String>
 
         progDialog.dismiss();
         if (result.length() == 0) {
-            this.activity.alert ("Unable to find reddit data. Try again later.");
+            this.fragment.alert ("Unable to find reddit data. Try again later.");
             return;
         }
         //Parse-Logic for Reddit JSON document
@@ -99,7 +100,7 @@ public class RedditApiTask extends AsyncTask<String, Integer, String>
             e.printStackTrace();
         }
         // Sets data for adapter in main activity.
-        this.activity.setTopics(topicdata);
+        fragment.setTopics(topicdata);
 
     }
 

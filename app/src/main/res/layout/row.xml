@@ -9,15 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:minHeight="1dp"/>
-
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <Cards.CardsLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#e3e3e3"
         android:orientation="vertical"
-        android:padding="5dp" >
+        android:padding="5dp"
+        style="@style/nowCardStyle"
+
+        >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:orientation="vertical"
+        style="@style/nowCardStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
 
         <ImageView
+
             android:id="@+id/thumbnail"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -63,8 +74,6 @@
 
              />
 
-
-
     </RelativeLayout>
-
+    </Cards.CardsLayout>
 </LinearLayout>

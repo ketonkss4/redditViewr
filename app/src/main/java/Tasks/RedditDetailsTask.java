@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import Cards.CardsLayout;
 import ListData.DetailsData;
 
 /**
@@ -27,6 +28,7 @@ public class RedditDetailsTask extends AsyncTask<String, Integer, String> {
     private MainFragment mFrag;
     private static final String DEBUG_TAG = "RedditDetailsTask";
     private Host host;
+
 
 
     /**

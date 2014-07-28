@@ -3,6 +3,7 @@ package ImageLoader;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ public class RedditIconTask {
     private static final String debugTag = "ImageWorker";
 
     private HashMap<String, Drawable> imageCache;
+    private LruCache<String,Drawable> imgCache;
     private static Drawable DEFAULT_ICON = null;
     private BaseAdapter adapter;
     private Boolean cancelled = false;
@@ -27,8 +29,12 @@ public class RedditIconTask {
 
     public RedditIconTask (Context context)
     {
+        final int maxMem = (int)(Runtime.getRuntime().maxMemory()/1024);
+        final int cacheSize = maxMem/8;
+        imgCache = new LruCache<String, Drawable>(cacheSize);
         //sets faux-image cache in form of HashMap stores drawables in memory
         imageCache = new HashMap<String, Drawable>();
+
     }
 
     public Drawable loadImage (BaseAdapter adapt, ImageView view)
@@ -36,9 +42,9 @@ public class RedditIconTask {
         //checks if image is in memory and makes a call to Reddit Icon task if imaage must be downloaded again.
         this.adapter = adapt;
         String url = (String) view.getTag();
-        if (imageCache.containsKey(url))
+        if (imgCache.get(url)!= null)
         {
-            return imageCache.get(url);
+            return getDrawableFromMemCache(url);
         }
         else {
             new ImageTask().execute(url);
@@ -56,6 +62,10 @@ public class RedditIconTask {
         return cancelled;
 
     }
+    public Drawable getDrawableFromMemCache(String key) {
+        return  imgCache.get(key);
+    }
+
     public class ImageTask extends AsyncTask<String, Void, Drawable>
     {
         private String s_url;
@@ -85,6 +95,10 @@ public class RedditIconTask {
                    Log.d(debugTag, "I/O : " + e.getMessage());
 
                }
+               if(s_url!=null && picture!=null) {
+                   imgCache.put(s_url, picture);
+               }else
+                   Log.d(debugTag, "Put in cache failed for url:"+s_url+" and pict:"+picture);
                return picture;
            }
             return null;
@@ -93,12 +107,11 @@ public class RedditIconTask {
         @Override
         protected void onPostExecute(Drawable result) {
             super.onPostExecute(result);
-            synchronized (this) {
+
                 //adds resulting drawable to memory
-                imageCache.put(s_url, result);
 
 
-            }
+
             //updates adapter view
             adapter.notifyDataSetChanged();
         }

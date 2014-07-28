@@ -1,19 +1,24 @@
+/**
+ * @author Kevin Moturi
+ * This class represents the main fragment in which the user selects posts to view and filters
+ * @version 1.0
+ */
+
 package com.google.android.gms.redditviewr.app;
 
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,12 +31,10 @@ import Listeners.OnSelectionListener;
 import Tasks.RedditApiTask;
 import ImageLoader.RedditIconTask;
 
-
-
 public class MainFragment extends android.support.v4.app.Fragment {
 
     private ArrayList<ListData> data;
-    private ListView postList;
+    private GridView postList;
     private LayoutInflater layoutInflater;
     private Button goButton;
     private Spinner filters;
@@ -44,6 +47,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
     private Host host;
     private OnSelectionListener selectionListener;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,16 +55,16 @@ public class MainFragment extends android.support.v4.app.Fragment {
         //Setting views in layout
         View v = inflater.inflate(R.layout.activity_main, container,
                 false);
-        this.postList = (ListView) v.findViewById(R.id.title_list);
+        this.postList = (GridView) v.findViewById(R.id.mainGrid);
         this.getImg = new RedditIconTask(host);
         this.filters = (Spinner) v.findViewById(R.id.filter);
         this.goButton = (Button) v.findViewById(R.id.go_button);
         this.host = new Host();
 
         //Creates load more button
-        Button loadMore = new Button(getActivity());
-        loadMore.setText("Load More");
-        postList.addFooterView(loadMore);
+//        Button loadMore = new Button(getActivity());
+//        loadMore.setText("Load More");
+//        postList.add(loadMore);
 
         //Passes spinner selection to load different subreddits
         this.goButton.setOnClickListener(new View.OnClickListener() {
@@ -111,14 +115,14 @@ public class MainFragment extends android.support.v4.app.Fragment {
             }
         });
         //Loads more reddit posts on click
-        loadMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textView = (TextView) filters.getSelectedView();
-                String filter = textView.getText().toString();
-
-            }
-        });
+//        loadMore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TextView textView = (TextView) filters.getSelectedView();
+//                String filter = textView.getText().toString();
+//
+//            }
+//        });
 
 
 

@@ -2,78 +2,94 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <View android:id="@+id/list_item_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:minHeight="1dp"/>
-    <Cards.CardsLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#e3e3e3"
+    <!--<Cards.CardsLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:background="#e3e3e3"-->
+        <!--android:orientation="vertical"-->
+        <!--android:padding="5dp"-->
+        <!--style="@style/nowCardStyle"-->
+
+        <!-->-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
         android:orientation="vertical"
-        android:padding="5dp"
         style="@style/nowCardStyle"
-
-        >
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-        android:orientation="vertical"
-        style="@style/nowCardStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
 
 
-        <ImageView
-
-            android:id="@+id/thumbnail"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="5dp" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_toRightOf="@id/thumbnail"/>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/thumbnail"
-            android:layout_below="@id/title"
-            android:layout_alignParentBottom="true"
             android:textStyle="bold|italic"
             android:textSize="12sp"
+            android:maxLength="10"
+            android:layout_alignParentLeft="true"
             />
+
+            <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+
+            android:layout_alignParentRight="true"
+
+             />
+
+        </RelativeLayout>
+
+        <ImageView
+
+            android:id="@+id/thumbnail"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:padding="5dp" />
+
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"
+            android:ellipsize="none"
+
+            android:scrollHorizontally="false"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/post_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:textSize="12sp"
-          />
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:textSize="12sp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
+            android:layout_gravity="left"
+            />
+        </LinearLayout>
 
-             />
-
-    </RelativeLayout>
-    </Cards.CardsLayout>
+    </LinearLayout>
+    <!--</Cards.CardsLayout>-->
 </LinearLayout>

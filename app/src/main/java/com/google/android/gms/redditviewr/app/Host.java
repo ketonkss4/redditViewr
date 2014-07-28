@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class Host extends FragmentActivity implements OnSelectionListener {
             fragmentTransaction.commit();
 
         } else {
-            //Save a reference to the
+            //Save a reference to the details fragment
             detailsFragment = (DetailsView)getSupportFragmentManager().findFragmentById(R.id.detials_frag);
         }
     }
@@ -94,11 +95,14 @@ public class Host extends FragmentActivity implements OnSelectionListener {
 
     @Override
     public void onBackPressed() {
-        final DetailsView detailsView = (DetailsView)getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT);
-        if(detailsView.allowBackPressed()) {
-
-
-            super.onBackPressed();
+           super.onBackPressed();
+        mFragmentManager = getSupportFragmentManager();
+        if (mFragmentManager.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            mFragmentManager.popBackStack();
+        } else {
+            finish();
+            Log.i("MainActivity", "nothing on backstack, calling super");
         }
 
 

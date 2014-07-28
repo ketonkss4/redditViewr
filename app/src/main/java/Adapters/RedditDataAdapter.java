@@ -2,6 +2,8 @@ package Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,6 +115,7 @@ public class RedditDataAdapter extends BaseAdapter  {
 
 
                     Drawable drawable = imgGet.loadImage(this, holder.thumbnail);
+
 
 
                     if (drawable != null) {

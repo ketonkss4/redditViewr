@@ -30,20 +30,34 @@
             </Button>
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/title_list"
+    <!--<ListView-->
+        <!--android:id="@+id/mainGrid"-->
+        <!--android:choiceMode="multipleChoice"-->
+        <!--android:smoothScrollbar="false"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0dip"-->
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:clickable="true">-->
+
+        <!--</ListView>-->
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/mainGrid"
         android:choiceMode="multipleChoice"
         android:smoothScrollbar="false"
         android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dip"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:clickable="true">
-
-        </ListView>
-
-
+        android:clickable="true"
+        android:columnWidth="100dp"
+        android:numColumns="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+    </GridView>
 
 
 </LinearLayout>

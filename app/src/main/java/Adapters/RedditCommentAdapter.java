@@ -67,7 +67,7 @@ public class RedditCommentAdapter extends BaseAdapter  {
     // sets view layout resources
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
 
-            convertView = inflater.inflate(R.layout.row, parent,false);
+            convertView = inflater.inflate(R.layout.comment_row, parent,false);
             holder = new DetailsView.DetailsViewHolder();
             holder.comment = (TextView)convertView.findViewById(R.id.title);
             holder.authorName = (TextView)convertView.findViewById(R.id.author);

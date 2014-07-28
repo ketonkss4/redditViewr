@@ -139,15 +139,7 @@ public class DetailsView extends Fragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        allowBackPressed();
-        super.onDetach();
 
-    }
 
-    public boolean allowBackPressed ( ){
-        return true;
-    }
 
 }

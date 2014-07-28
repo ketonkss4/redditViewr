@@ -4,24 +4,20 @@ package com.google.android.gms.redditviewr.app;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.ArrayList;
 
 import Adapters.RedditCommentAdapter;
-import ImageLoader.LargeIconTask;
-import ImageLoader.RedditIconTask;
 import ListData.DetailsData;
 import Tasks.RedditDetailsTask;
 
@@ -33,15 +29,10 @@ public class DetailsView extends Fragment {
 
     private ArrayList<DetailsData> data;
     private ListView commentList;
-    private LayoutInflater layoutInflater;
-    private LargeIconTask getImg;
-    private RedditIconTask stopImg;
-    private ImageView imageView;
+    private NetworkImageView imageView;
     final private String DEBUG_TAG = "Details View";
     private Bundle args;
-
-
-
+    private LayoutInflater layoutInflater;
 
 
     @Override
@@ -53,6 +44,10 @@ public class DetailsView extends Fragment {
 
         RedditDetailsTask detailsTask = new RedditDetailsTask(null,DetailsView.this);
 
+        View v = inflater.inflate(R.layout.details_view, container,
+                false);
+        this.commentList = (ListView) v.findViewById(R.id.commentList);
+        this.imageView =(NetworkImageView) v.findViewById(R.id.imageLarge);
         if (args != null){
             String img = args.getString("img");
             String comments = args.getString("comments");
@@ -62,12 +57,9 @@ public class DetailsView extends Fragment {
         }
 
 
-        View v = inflater.inflate(R.layout.details_view, container,
-                false);
 
-        this.commentList = (ListView) v.findViewById(R.id.commentList);
-        this.imageView =(ImageView) v.findViewById(R.id.imageLarge);
-        this.getImg = new LargeIconTask(this);
+
+
 
         return v;
     }
@@ -97,9 +89,8 @@ public class DetailsView extends Fragment {
     public void setDrawable(String url){
 
         if(url != null) {
-            Log.v("DETAILS_VIEW:", url);
-            LargeIconTask largeIconTask = new LargeIconTask(this);
-            largeIconTask.execImage(url);
+            imageView.setDefaultImageResId(R.drawable.filler_icon);
+            imageView.setImageUrl(url, ImgController.getInstance().getImageLoader());
 
         }else{
            imageView.setImageResource(R.drawable.filler_icon);
@@ -107,16 +98,6 @@ public class DetailsView extends Fragment {
        }
     }
 
-    public void setImage (Drawable draw){
-        if (draw != null) {
-            imageView.setImageDrawable(draw);
-
-
-        } else {
-            imageView.setImageResource(R.drawable.filler_icon);
-        }
-
-    }
     public void alert(String msg) {
         Toast.makeText(this.getActivity(), msg, Toast.LENGTH_LONG).show();
     }

@@ -53,7 +53,7 @@
 
         </RelativeLayout>
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
 
             android:id="@+id/thumbnail"
             android:layout_width="fill_parent"

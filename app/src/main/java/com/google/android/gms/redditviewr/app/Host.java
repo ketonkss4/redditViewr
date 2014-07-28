@@ -7,15 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 
-import ImageLoader.RedditIconTask;
 import Listeners.OnSelectionListener;
 import Tasks.RedditApiTask;
 
 public class Host extends FragmentActivity implements OnSelectionListener {
     private RedditApiTask apiTask;
-    private RedditIconTask getImg;
     private MainFragment mainFragment;
     private DetailsView  detailsFragment;
     private FragmentManager mFragmentManager;
@@ -64,8 +61,6 @@ public class Host extends FragmentActivity implements OnSelectionListener {
     @Override
     protected void onPause() {
         super.onPause();
-        apiTask.cancel(true);
-        getImg.stopImage(true);
 
     }
     //attempts to restart Image download when activity is resumed

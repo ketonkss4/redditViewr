@@ -19,17 +19,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.toolbox.NetworkImageView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import Adapters.RedditDataAdapter;
 import ListData.ListData;
 import Listeners.OnSelectionListener;
 import Tasks.RedditApiTask;
-import ImageLoader.RedditIconTask;
 
 public class MainFragment extends android.support.v4.app.Fragment {
 
@@ -38,25 +39,32 @@ public class MainFragment extends android.support.v4.app.Fragment {
     private LayoutInflater layoutInflater;
     private Button goButton;
     private Spinner filters;
-    private RedditIconTask getImg;
     private RedditApiTask apiTask;
     private ProgressDialog progDialog;
     private String DEBUG_TAG = "MainFragment";
+    private int mCurCheckPosition;
 
 
     private Host host;
     private OnSelectionListener selectionListener;
+    private static final String SAVED_STATE="save_state";
+    private Serializable mObject;
+    private Bundle savedState = null;
+    private boolean createdStateInDestroyView;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedState != null) {
+            mObject = savedState.getSerializable(SAVED_STATE);
+        }
         //Setting views in layout
         View v = inflater.inflate(R.layout.activity_main, container,
                 false);
         this.postList = (GridView) v.findViewById(R.id.mainGrid);
-        this.getImg = new RedditIconTask(host);
         this.filters = (Spinner) v.findViewById(R.id.filter);
         this.goButton = (Button) v.findViewById(R.id.go_button);
         this.host = new Host();
@@ -99,7 +107,6 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
 
                 Fragment newFragment = new DetailsView();
-                // consider using Java coding conventions (upper first char class names!!!)
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
@@ -132,9 +139,14 @@ public class MainFragment extends android.support.v4.app.Fragment {
     }
 
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+        }
 
     }
 
@@ -156,13 +168,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
     public static class MyViewHolder {
         public TextView listName, authorName, redditScore, postTime;
         public Button goButton;
-        public ImageView thumbnail;
+        public NetworkImageView thumbnail;
         public ListData data;
     }
 //sets all the data in the layout view
     public void setTopics(ArrayList<ListData> data) {
         this.data = data;
-        this.postList.setAdapter(new RedditDataAdapter(this, this.getImg, this.layoutInflater, this.data));
+        this.postList.setAdapter(new RedditDataAdapter(this, this.layoutInflater, this.data));
 
     }
 
@@ -198,11 +210,35 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
         return true;
     }
+    private Bundle saveState(){
+        Bundle state = new Bundle();
+        
+        state.putSerializable(SAVED_STATE, mObject);
+        return state;
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
+        if (mObject == null) {
+            outState.putBundle(SAVED_STATE, savedState);
+        } else {
+            outState.putBundle(SAVED_STATE, createdStateInDestroyView ? savedState : saveState());
+        }
+        createdStateInDestroyView = false;
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        savedState = saveState();
+        createdStateInDestroyView = true;
+        mObject = null;
+    }
     @Override
     public void onPause() {
         super.onPause();
-        getImg.stopImage(true);
-        apiTask.cancel(true);
+
     }
 }

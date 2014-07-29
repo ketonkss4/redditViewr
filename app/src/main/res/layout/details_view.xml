@@ -6,14 +6,14 @@
     android:tag="detailsFrag"
     >
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:id="@+id/imageLarge"
-        android:layout_gravity="center_horizontal"
-        />
+    <!--<com.android.volley.toolbox.NetworkImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="280dp"-->
+        <!--android:id="@+id/imageLarge"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--/>-->
 
-    <ListView
+    <com.nirhart.parallaxscroll.views.ParallaxListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/commentList"

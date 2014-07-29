@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class DetailsView extends Fragment {
 
 
     private ArrayList<DetailsData> data;
-    private ListView commentList;
+    private ParallaxListView commentList;
     private NetworkImageView imageView;
     final private String DEBUG_TAG = "Details View";
     private Bundle args;
@@ -46,8 +47,8 @@ public class DetailsView extends Fragment {
 
         View v = inflater.inflate(R.layout.details_view, container,
                 false);
-        this.commentList = (ListView) v.findViewById(R.id.commentList);
-        this.imageView =(NetworkImageView) v.findViewById(R.id.imageLarge);
+        this.commentList = (ParallaxListView) v.findViewById(R.id.commentList);
+//        this.imageView =(NetworkImageView) v.findViewById(R.id.imageLarge);
         if (args != null){
             String img = args.getString("img");
             String comments = args.getString("comments");
@@ -87,13 +88,25 @@ public class DetailsView extends Fragment {
 
 
     public void setDrawable(String url){
-
+        NetworkImageView view = new NetworkImageView(getActivity());
         if(url != null) {
-            imageView.setDefaultImageResId(R.drawable.filler_icon);
-            imageView.setImageUrl(url, ImgController.getInstance().getImageLoader());
+
+            view.setDefaultImageResId(R.drawable.filler_icon);
+            view.setImageUrl(url,ImgController.getInstance().getImageLoader());
+            view.setMaxHeight(280);
+            view.setMinimumHeight(250);
+            commentList.addParallaxedHeaderView(view);
+
+//            imageView.setDefaultImageResId(R.drawable.filler_icon);
+//            imageView.setImageUrl(url, ImgController.getInstance().getImageLoader());
 
         }else{
-           imageView.setImageResource(R.drawable.filler_icon);
+            view.setDefaultImageResId(R.drawable.filler_icon);
+            view.setMaxHeight(280);
+            view.setMinimumHeight(250);
+            commentList.addParallaxedHeaderView(view);
+
+//           imageView.setImageResource(R.drawable.filler_icon);
 
        }
     }

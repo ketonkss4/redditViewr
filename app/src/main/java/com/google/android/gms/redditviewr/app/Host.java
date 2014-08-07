@@ -25,7 +25,6 @@ public class Host extends FragmentActivity implements OnSelectionListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
-
         this.mainFragment = new MainFragment();
 
         if (!isInTwoPaneMode()) {
@@ -41,6 +40,8 @@ public class Host extends FragmentActivity implements OnSelectionListener {
             //Save a reference to the details fragment
             detailsFragment = (DetailsView)getSupportFragmentManager().findFragmentById(R.id.detials_frag);
         }
+        ViewServer.get(this).addWindow(this);
+
     }
 
     private boolean isInTwoPaneMode() {
@@ -66,6 +67,7 @@ public class Host extends FragmentActivity implements OnSelectionListener {
     //attempts to restart Image download when activity is resumed
     @Override
     protected void onResume() {
+        ViewServer.get(this).setFocusedWindow(this);
         super.onResume();
 
     }
@@ -102,4 +104,9 @@ public class Host extends FragmentActivity implements OnSelectionListener {
 
 
     }
+    @Override
+    public void onDestroy() {
+         super.onDestroy();
+         ViewServer.get(this).removeWindow(this);
+             }
 }

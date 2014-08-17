@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_github"
+        android:showAsAction="always"
+        android:icon="@drawable/github" 
+        android:title="Source" 
+        tools:ignore="HardcodedText"/> 
+
+</menu>
+<!-- From: file:/C:/Users/Administrator.KevinMoturi-HP/Desktop/Android%20Dev/RedditViewr/ParallaxScrollExample/res/menu/main.xml -->

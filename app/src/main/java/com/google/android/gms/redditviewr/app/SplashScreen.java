@@ -30,68 +30,7 @@ public class SplashScreen extends ActionBarActivity {
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash);
 
-        AsyncTask<String, Integer, String > asyncTask = new AsyncTask<String, Integer, String>() {
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                try {
-                    //Runs HTTPGet request in the background and returns response
-                    String result  = RedditApiHelper.downloadFromServer("hot");
-                    return result;
-                } catch (Exception e) {
-                    return new String();
-                }
-            }
-
-
-            @Override
-            protected void onPostExecute(String result)
-            {
-
-                ArrayList<ListData> topicdata = new ArrayList<ListData>();
-
-                if (result.length() == 0) {
-                    return;
-                }
-                //Parse-Logic for Reddit JSON document
-                try {
-                    JSONObject response = new JSONObject(result);
-                    JSONObject data = response.getJSONObject("data");
-                    JSONArray hotTopics = data.getJSONArray("children");
-                    for(int i=0; i<25; i++) {
-                        JSONObject topic = hotTopics.getJSONObject(i).getJSONObject("data");
-                        ListData item = new ListData();
-                        DetailsData img = new DetailsData();
-                        item.setTitle(topic.getString("title"));
-                        item.setAuthor(topic.getString("author"));
-                        item.setImageUrl(topic.getString("url"));
-                        img.setLargeImg(topic.getString("url"));
-                        item.setPostTime(topic.getLong("created_utc"));
-                        item.setrScore(topic.getString("score"));
-                        item.setComments(topic.getString("permalink"));
-
-
-
-
-                        topicdata.add(item);
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // Sets data for adapter in main activity.
-                MainFragment main = new MainFragment();
-               main.setTopics(topicdata);
-
-            }
-        };
-//
 
 
 

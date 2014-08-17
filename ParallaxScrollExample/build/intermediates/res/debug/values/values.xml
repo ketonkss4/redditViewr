@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/C:/Users/Administrator.KevinMoturi-HP/Desktop/Android%20Dev/RedditViewr/ParallaxScrollExample/build/intermediates/exploded-aar/RedditViewr/ParallaxScroll/unspecified/res/values/values.xml -->
+    <eat-comment />
+
+    <declare-styleable name="ParallaxScroll">
+        <attr name="parallax_factor" format="float" />
+        <attr name="inner_parallax_factor" format="float" />
+        <attr name="parallax_views_num" format="integer" />
+        <attr name="circular_parallax" format="boolean" />
+    </declare-styleable>
+    <!-- From: file:/C:/Users/Administrator.KevinMoturi-HP/Desktop/Android%20Dev/RedditViewr/ParallaxScrollExample/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="app_name">ParallaxScrollExample</string>
+    <!-- From: file:/C:/Users/Administrator.KevinMoturi-HP/Desktop/Android%20Dev/RedditViewr/ParallaxScrollExample/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>

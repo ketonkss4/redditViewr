@@ -13,7 +13,6 @@ import Tasks.RedditApiTask;
 
 public class Host extends FragmentActivity implements OnSelectionListener {
     private RedditApiTask apiTask;
-    private MainFragment mainFragment;
     private DetailsView  detailsFragment;
     private FragmentManager mFragmentManager;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
@@ -25,7 +24,7 @@ public class Host extends FragmentActivity implements OnSelectionListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
-        this.mainFragment = new MainFragment();
+        MainFragment mainFragment;
 
         if (!isInTwoPaneMode()) {
             mainFragment = new MainFragment();

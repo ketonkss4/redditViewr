@@ -67,38 +67,23 @@ public class RedditDataAdapter extends BaseAdapter  {
         final MainFragment.MyViewHolder holder;
         if (convertView == null) {
             // sets view layout resources
-
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             convertView = inflater.inflate(R.layout.row, parent, false);
             holder = new MainFragment.MyViewHolder();
-            holder.listName = (TextView) convertView.findViewById(R.id.title);
-            holder.authorName = (TextView) convertView.findViewById(R.id.author);
-            holder.thumbnail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
-            holder.goButton = (Button) convertView.findViewById(R.id.go_button);
-            holder.postTime = (TextView) convertView.findViewById(R.id.post_date);
-            holder.redditScore = (TextView) convertView.findViewById(R.id.score);
-
+            setLayoutRes(convertView, holder);
             //Allows view to be recycled
             convertView.setTag(holder);
             Log.v(DEBUG_TAG, "Data Set in Reddit Adapter");
-
         } else {
             holder = (MainFragment.MyViewHolder) convertView.getTag();
         }
-
         ListData data = topics.get(position);
         try {
             //converts timestamp into a date format
-            long lg = Long.valueOf(data.getPostTime()) * 1000;
-            Date date = new Date(lg);
-            String postTime = new SimpleDateFormat("MM dd, yyyy hh:mma").format(date);
+            String postTime = convertTime(data);
 
             //sets data resources in the holder
-            holder.data = data;
-            holder.listName.setText(data.getTitle());
-            holder.authorName.setText(data.getAuthor());
-            holder.postTime.setText(postTime);
-            holder.redditScore.setText(data.getrScore());
+            setData(holder, data, postTime);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,28 +93,47 @@ public class RedditDataAdapter extends BaseAdapter  {
         if (data.getImageUrl() != null) {
 //
             try {
-
-                holder.thumbnail.setTag(data.getImageUrl());
-
-                holder.thumbnail.setDefaultImageResId(R.drawable.filler_icon);
-                holder.thumbnail.setImageUrl(data.getImageUrl(),ImgController.getInstance().getImageLoader());
-
-
-
+                setDrawableView(holder, data);
                 return convertView;
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.v(DEBUG_TAG, "no image: ", e);
                 holder.thumbnail.setImageResource(R.drawable.filler_icon);
-
-
             }
         }else {
             return null;
         }
-
-
         return convertView;
+    }
+
+    private void setDrawableView(MainFragment.MyViewHolder holder, ListData data) {
+        holder.thumbnail.setTag(data.getImageUrl());
+
+        holder.thumbnail.setDefaultImageResId(R.drawable.filler_icon);
+        holder.thumbnail.setImageUrl(data.getImageUrl(), ImgController.getInstance().getImageLoader());
+    }
+
+    private void setData(MainFragment.MyViewHolder holder, ListData data, String postTime) {
+        holder.data = data;
+        holder.listName.setText(data.getTitle());
+        holder.authorName.setText(data.getAuthor());
+        holder.postTime.setText(postTime);
+        holder.redditScore.setText(data.getrScore());
+    }
+
+    private String convertTime(ListData data) {
+        long lg = Long.valueOf(data.getPostTime()) * 1000;
+        Date date = new Date(lg);
+        return new SimpleDateFormat("MM dd, yyyy hh:mma").format(date);
+    }
+
+    private void setLayoutRes(View convertView, MainFragment.MyViewHolder holder) {
+        holder.listName = (TextView) convertView.findViewById(R.id.title);
+        holder.authorName = (TextView) convertView.findViewById(R.id.author);
+        holder.thumbnail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+        holder.goButton = (Button) convertView.findViewById(R.id.go_button);
+        holder.postTime = (TextView) convertView.findViewById(R.id.post_date);
+        holder.redditScore = (TextView) convertView.findViewById(R.id.score);
     }
 }
 

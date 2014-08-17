@@ -7,11 +7,14 @@
 package com.google.android.gms.redditviewr.app;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,15 +45,17 @@ public class MainFragment extends android.support.v4.app.Fragment {
     private RedditApiTask apiTask;
     private ProgressDialog progDialog;
     private String DEBUG_TAG = "MainFragment";
-    private int mCurCheckPosition;
+
+
+
+    final private String mCurDefaultPosition = "hot";
+    final private String stateKey = "stateKey";
+    private String filter;
+    private String savedList;
 
 
     private Host host;
     private OnSelectionListener selectionListener;
-    private static final String SAVED_STATE="save_state";
-    private Serializable mObject;
-    private Bundle savedState = null;
-    private boolean createdStateInDestroyView;
 
 
 
@@ -58,9 +63,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedState != null) {
-            mObject = savedState.getSerializable(SAVED_STATE);
-        }
+
         //Setting views in layout
         View v = inflater.inflate(R.layout.activity_main, container,
                 false);
@@ -69,30 +72,14 @@ public class MainFragment extends android.support.v4.app.Fragment {
         this.goButton = (Button) v.findViewById(R.id.go_button);
         this.host = new Host();
 
-        //Creates load more button
-//        Button loadMore = new Button(getActivity());
-//        loadMore.setText("Load More");
-//        postList.add(loadMore);
+        checkSavedState(savedInstanceState);
+        apiTask = new RedditApiTask(MainFragment.this);
+        if(filter!=null && apiTask != null) {
+            apiTask.execute(filter);
+        }
 
         //Passes spinner selection to load different subreddits
-        this.goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                apiTask = new RedditApiTask(MainFragment.this);
-                try {
-                    TextView textView = (TextView) filters.getSelectedView();
-                    String filter = textView.getText().toString();
-                    apiTask.execute(filter);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    apiTask.cancel(true);
-
-                    alert(getResources().getString(R.string.looking_for_topics));
-                }
-            }
-        });
+        setSpinner(this.goButton);
 
         //sends intent with image link and comment link data as an extra
         postList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,32 +108,53 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
             }
         });
-        //Loads more reddit posts on click
-//        loadMore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                TextView textView = (TextView) filters.getSelectedView();
-//                String filter = textView.getText().toString();
-//
-//            }
-//        });
-
-
 
 
 
         return v;
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+    private void checkSavedState(Bundle savedInstanceState) {
+        Log.v(filter, "THIS IS THE FILTER STATE(checkedSave)" );
+        if(savedList!=null){
+           filter=savedList;
+        }else {
+            filter = mCurDefaultPosition;
+        }
+//        filter = savedInstanceState == null ? mCurDefaultPosition :
+//                savedInstanceState.getString(stateKey, mCurDefaultPosition);
+        Log.v(filter, "THIS IS THE FILTER STATE(checkedSave)" );
+
+    }
+
+    private void setSpinner(Button goButton) {
+       goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                apiTask = new RedditApiTask(MainFragment.this);
+                try {
+                    TextView textView = (TextView) filters.getSelectedView();
+                     filter = textView.getText().toString();
+                    apiTask.execute(filter);
+                    Log.v(filter, "THIS IS THE FILTER STATE(setSpinner)" );
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    apiTask.cancel(true);
+
+                    alert(getResources().getString(R.string.looking_for_topics));
+                }
+            }
+        });
+    }
 
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            // Restore last state for checked position.
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
-        }
+
 
     }
 
@@ -189,7 +197,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
                 apiTask = new RedditApiTask(MainFragment.this);
                 try {
                     TextView textView = (TextView) filters.getSelectedView();
-                    String filter = textView.getText().toString();
+                     filter = textView.getText().toString();
                     apiTask.execute(filter);
 
                 } catch (Exception e) {
@@ -210,35 +218,24 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
         return true;
     }
-    private Bundle saveState(){
-        Bundle state = new Bundle();
-        
-        state.putSerializable(SAVED_STATE, mObject);
-        return state;
-    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        if (mObject == null) {
-            outState.putBundle(SAVED_STATE, savedState);
-        } else {
-            outState.putBundle(SAVED_STATE, createdStateInDestroyView ? savedState : saveState());
-        }
-        createdStateInDestroyView = false;
-        super.onSaveInstanceState(outState);
+        outState.putString(stateKey ,filter);
+        Log.v(filter, "THIS IS THE FILTER STATE (onSave)"  );
     }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        savedState = saveState();
-        createdStateInDestroyView = true;
-        mObject = null;
+
+
     }
     @Override
     public void onPause() {
         super.onPause();
+        savedList = filter;
 
     }
 }

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="unspecified" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\exploded-aar\RedditViewr\ParallaxScroll\unspecified\res" >
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\exploded-aar\RedditViewr\ParallaxScroll\unspecified\res\values\values.xml"
+                qualifiers="" >
+                <declare-styleable name="ParallaxScroll" >
+                    <attr
+                        name="parallax_factor"
+                        format="float" />
+                    <attr
+                        name="inner_parallax_factor"
+                        format="float" />
+                    <attr
+                        name="parallax_views_num"
+                        format="integer" />
+                    <attr
+                        name="circular_parallax"
+                        format="boolean" />
+                </declare-styleable>
+            </file>
+        </source>
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\src\main\res" />
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res" >
+            <file
+                name="item_background"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\drawable\item_background.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="github"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\drawable-xhdpi\github.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="activity_main"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\activity_main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expand_list_multiple_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\expand_list_multiple_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expand_list_one_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\expand_list_one_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="item"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="item_child"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\item_child.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list_multiple_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\list_multiple_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list_one_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\list_one_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="scroll_multiple_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\scroll_multiple_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="scroll_one_parallax"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\layout\scroll_one_parallax.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="main"
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\menu\main.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\values\strings.xml"
+                qualifiers="" >
+                <string name="app_name" >ParallaxScrollExample
+                </string>
+            </file>
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\values\styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Light" >
+
+                    <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+                    -->
+                </style>
+
+                <style
+                    name="AppTheme"
+                    parent="AppBaseTheme" >
+
+                    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+                </style>
+            </file>
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\values-v11\styles.xml"
+                qualifiers="v11" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light" >
+
+                    <!-- API 11 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\res\values-v14\styles.xml"
+                qualifiers="v14" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light.DarkActionBar" >
+
+                    <!-- API 14 theme customizations can go here. -->
+                </style>
+            </file>
+        </source>
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\generated\res\rs\debug" />
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\generated\res\generated\debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\src\debug\res" />
+    </dataSet>
+
+</merger>

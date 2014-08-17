@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\src\main\res" />
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\res" >
+            <file
+                path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\res\values\attrs.xml"
+                qualifiers="" >
+                <declare-styleable name="ParallaxScroll" >
+                    <attr
+                        name="parallax_factor"
+                        format="float" />
+                    <attr
+                        name="inner_parallax_factor"
+                        format="float" />
+                    <attr
+                        name="parallax_views_num"
+                        format="integer" />
+                    <attr
+                        name="circular_parallax"
+                        format="boolean" />
+                </declare-styleable>
+            </file>
+        </source>
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\build\generated\res\rs\release" />
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\build\generated\res\generated\release" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScroll\src\release\res" />
+    </dataSet>
+
+</merger>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="unspecified" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\exploded-aar\RedditViewr\ParallaxScroll\unspecified\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\src\main\assets" />
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\src\debug\assets" />
+    </dataSet>
+
+</merger>

@@ -44,11 +44,17 @@ public class DetailsView extends Fragment {
          args = getArguments();
 
         RedditDetailsTask detailsTask = new RedditDetailsTask(null,DetailsView.this);
-
         View v = inflater.inflate(R.layout.details_view, container,
                 false);
+
         this.commentList = (ParallaxListView) v.findViewById(R.id.commentList);
-//        this.imageView =(NetworkImageView) v.findViewById(R.id.imageLarge);
+        createContent(args, detailsTask);
+
+        return v;
+    }
+
+    private void createContent(Bundle args, RedditDetailsTask detailsTask) {
+
         if (args != null){
             String img = args.getString("img");
             String comments = args.getString("comments");
@@ -56,13 +62,6 @@ public class DetailsView extends Fragment {
             detailsTask.execute(comments);
             setDrawable(img);
         }
-
-
-
-
-
-
-        return v;
     }
 
     @Override
@@ -97,8 +96,6 @@ public class DetailsView extends Fragment {
             view.setMinimumHeight(250);
             commentList.addParallaxedHeaderView(view);
 
-//            imageView.setDefaultImageResId(R.drawable.filler_icon);
-//            imageView.setImageUrl(url, ImgController.getInstance().getImageLoader());
 
         }else{
             view.setDefaultImageResId(R.drawable.filler_icon);
@@ -106,7 +103,6 @@ public class DetailsView extends Fragment {
             view.setMinimumHeight(250);
             commentList.addParallaxedHeaderView(view);
 
-//           imageView.setImageResource(R.drawable.filler_icon);
 
        }
     }

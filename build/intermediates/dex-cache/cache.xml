@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\pre-dexed\debug\classes-ac515c3089be9e84ae3c0d632bef1f84b9ae59ef.jar"
+        jar="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\exploded-aar\RedditViewr\ParallaxScroll\unspecified\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6fc5d58efcb9c85d2fb1abd96ecd5cbd4e44a477"/>
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e311e493b238b75da4095bd5ee7b69d76d73dc42.jar"
+        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\pre-dexed\debug\classes-36172d742932e32eb4e5091719acd02617e6bd1d.jar"
+        jar="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\exploded-aar\RedditViewr\ParallaxScroll\unspecified\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6fc5d58efcb9c85d2fb1abd96ecd5cbd4e44a477"/>
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\pre-dexed\debug\classes-ceba13c55c2ebf10de0854083a1cf06de1eee89f.jar"
+        jar="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\build\intermediates\pre-dexed\debug\volley-ebfc5c9d514814a866f35c3cd6fc1b6ad1347027.jar"
+        jar="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\app\libs\volley.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0b59a1d65db47ffa9c79abc472b447952592621a"/>
+    <item
+        dex="C:\Users\Administrator.KevinMoturi-HP\Desktop\Android Dev\RedditViewr\ParallaxScrollExample\build\intermediates\pre-dexed\debug\support-v4-19.0.1-04dde37e48405b4442ed2e114457f34f6f27cab4.jar"
+        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.0.1\support-v4-19.0.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+
+</pre-dex-items>
